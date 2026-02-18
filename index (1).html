@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ChatBack — MSK Navigation & Referral Intelligence</title>
+<meta name="description" content="National Musculoskeletal Navigation Platform — Symptom Assessment, Provider Matching, Visit Preparation">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F8F6F3;--sf:#FFF;--sfm:#F0ECEA;--bd:#E2DDD8;--bdl:#EDE9E5;--tx:#1A1614;--tx2:#6B5E54;--txm:#9B8F85;--pr:#1B6B5A;--prl:#E8F5F0;--prh:#14544A;--ac:#D4764E;--acl:#FDF0EB;--em:#C0392B;--eml:#FDEDEC;--ur:#E67E22;--url:#FEF5E7;--el:#F39C12;--ell:#FEF9E7;--ok:#27AE60;--okl:#EAFAF1;--inf:#2980B9;--inl:#EBF5FB;--rs:8px;--rm:12px;--rl:16px;--rxl:24px;--ss:0 1px 3px rgba(26,22,20,.06);--sm:0 4px 12px rgba(26,22,20,.08);--sl:0 8px 30px rgba(26,22,20,.12);--fb:'DM Sans',system-ui,sans-serif;--fd:'Fraunces',Georgia,serif;--tr:.25s cubic-bezier(.4,0,.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--fb);background:var(--bg);color:var(--tx);line-height:1.6;min-height:100vh}
+.hd{background:rgba(255,255,255,.92);border-bottom:1px solid var(--bd);padding:.75rem 1.5rem;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.hd-in{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:var(--fd);font-size:1.35rem;font-weight:700;color:var(--pr);letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem;cursor:pointer}
+.logo-i{width:32px;height:32px;background:var(--pr);border-radius:8px;display:flex;align-items:center;justify-content:center}
+.logo-i svg{width:18px;height:18px}
+.hd-badge{font-size:.7rem;font-weight:600;color:var(--txm);background:var(--sfm);padding:.2rem .6rem;border-radius:20px;letter-spacing:.05em;text-transform:uppercase}
+.mn{max-width:900px;margin:0 auto;padding:1.5rem;min-height:calc(100vh - 60px)}
+.pb{margin-bottom:2rem}.pb-t{height:4px;background:var(--bd);border-radius:4px;overflow:hidden;margin-bottom:.75rem}
+.pb-f{height:100%;background:var(--pr);border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.pb-ls{display:flex;justify-content:space-between;gap:.25rem}
+.pb-l{font-size:.68rem;color:var(--txm);font-weight:500;transition:color var(--tr)}
+.pb-l.act{color:var(--pr);font-weight:600}.pb-l.done{color:var(--tx2)}
+@media(max-width:600px){.pb-ls{display:none}}
+.step{animation:fi .4s ease-out}
+@keyframes fi{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.cd{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--rl);padding:2rem;box-shadow:var(--ss);margin-bottom:1.25rem}
+.cd-e{box-shadow:var(--sm)}.cd-em{border-color:var(--em);border-width:2px;background:var(--eml)}
+.cd-ur{border-color:var(--ur);border-width:2px;background:var(--url)}.cd-inf{border-color:var(--inf);background:var(--inl)}
+.hxl{font-family:var(--fd);font-size:2.25rem;font-weight:700;line-height:1.15;letter-spacing:-.03em;margin-bottom:.75rem}
+.hlg{font-family:var(--fd);font-size:1.6rem;font-weight:700;line-height:1.2;letter-spacing:-.02em;margin-bottom:.5rem}
+.hmd{font-family:var(--fd);font-size:1.2rem;font-weight:600;line-height:1.3;margin-bottom:.35rem}
+.hsm{font-size:.85rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txm);margin-bottom:.5rem}
+.bd{font-size:1rem;color:var(--tx2);line-height:1.65}.bds{font-size:.875rem;color:var(--tx2);line-height:1.55}
+.cap{font-size:.78rem;color:var(--txm);line-height:1.5}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.75rem;border:none;border-radius:var(--rm);font-family:var(--fb);font-size:.95rem;font-weight:600;cursor:pointer;transition:all var(--tr);text-decoration:none;line-height:1.2}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--pr);color:#fff}.btn-p:hover{background:var(--prh);box-shadow:var(--sm)}
+.btn-p:disabled{background:var(--bd);color:var(--txm);cursor:not-allowed;transform:none}
+.btn-s{background:var(--sf);color:var(--tx);border:1px solid var(--bd)}.btn-s:hover{background:var(--sfm)}
+.btn-g{background:transparent;color:var(--pr);padding:.5rem 1rem}.btn-g:hover{background:var(--prl)}
+.btn-em{background:var(--em);color:#fff;font-size:1.05rem;padding:1rem 2rem}.btn-em:hover{background:#A93226}
+.btn-lg{padding:1rem 2.5rem;font-size:1.05rem;border-radius:var(--rl)}.btn-f{width:100%}
+.br{display:flex;gap:.75rem;margin-top:1.5rem;flex-wrap:wrap}.br-b{justify-content:space-between}.br-e{justify-content:flex-end}
+.ig{margin-bottom:1.5rem}
+.lb{display:block;font-size:.95rem;font-weight:500;color:var(--tx);margin-bottom:.5rem}
+.inp{width:100%;padding:.85rem 1rem;border:2px solid var(--bd);border-radius:var(--rm);font-family:var(--fb);font-size:1rem;color:var(--tx);background:var(--sf);transition:border-color var(--tr);outline:none}
+.inp:focus{border-color:var(--pr)}.inp::placeholder{color:var(--txm)}.inp-err{border-color:var(--em)}
+.opts{display:flex;flex-direction:column;gap:.6rem}
+.opt{display:flex;align-items:center;gap:.85rem;padding:1rem 1.25rem;border:2px solid var(--bd);border-radius:var(--rm);cursor:pointer;transition:all var(--tr);background:var(--sf);user-select:none}
+.opt:hover{border-color:var(--pr);background:var(--prl)}
+.opt.sel{border-color:var(--pr);background:var(--prl)}
+.opt-r,.opt-c{width:22px;height:22px;border:2px solid var(--bd);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all var(--tr)}
+.opt-c{border-radius:6px}
+.opt.sel .opt-r,.opt.sel .opt-c{border-color:var(--pr);background:var(--pr)}
+.opt.sel .opt-r::after{content:'';width:8px;height:8px;background:#fff;border-radius:50%;display:block}
+.opt.sel .opt-c::after{content:'';width:6px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg);margin-top:-2px;display:block}
+.opt-t{font-size:.95rem;font-weight:500;color:var(--tx)}
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:.75rem;margin:1rem 0}
+.rc{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.25rem .75rem;border:2px solid var(--bd);border-radius:var(--rl);cursor:pointer;transition:all var(--tr);background:var(--sf);text-align:center}
+.rc:hover{border-color:var(--pr);transform:translateY(-2px);box-shadow:var(--sm)}
+.rc.sel{border-color:var(--pr);background:var(--prl);transform:translateY(-2px);box-shadow:var(--sm)}
+.rc-i{font-size:2rem;line-height:1}.rc-l{font-size:.85rem;font-weight:600;color:var(--tx)}
+.sc{margin:1rem 0}.sc-i{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:4px;outline:none;background:linear-gradient(to right,var(--ok),var(--el),var(--em))}
+.sc-i::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;border-radius:50%;background:var(--sf);border:3px solid var(--pr);box-shadow:var(--sm);cursor:pointer}
+.sc-i::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:var(--sf);border:3px solid var(--pr);box-shadow:var(--sm);cursor:pointer}
+.sc-ls{display:flex;justify-content:space-between;margin-top:.35rem}.sc-v{font-family:var(--fd);font-size:2.5rem;font-weight:700;color:var(--pr);text-align:center;margin-bottom:.25rem}
+.pc{background:var(--sf);border:1px solid var(--bdl);border-radius:var(--rl);padding:1.5rem;margin-bottom:.85rem;transition:all var(--tr);position:relative}
+.pc:hover{box-shadow:var(--sm)}.pc-sp{border-left:4px solid var(--ac)}
+.pc-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.75rem}
+.pc-n{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--tx)}
+.pc-cr{font-size:.8rem;color:var(--txm);margin-top:.1rem}
+.mb{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:20px;font-size:.78rem;font-weight:700;flex-shrink:0}
+.mb-h{background:var(--okl);color:var(--ok)}.mb-m{background:var(--ell);color:#B7950B}.mb-l{background:var(--sfm);color:var(--txm)}
+.pm{display:flex;flex-wrap:wrap;gap:1rem;margin:.5rem 0;font-size:.85rem;color:var(--tx2)}
+.pm-i{display:flex;align-items:center;gap:.3rem}
+.pr{margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--bdl)}
+.rsn{font-size:.82rem;color:var(--tx2);margin-bottom:.2rem}
+.spl{position:absolute;top:.75rem;right:.75rem;font-size:.68rem;font-weight:600;color:var(--ac);background:var(--acl);padding:.15rem .5rem;border-radius:20px}
+.sb{display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.sb-l{font-size:.78rem;color:var(--txm);min-width:90px}
+.sb-t{flex:1;height:6px;background:var(--sfm);border-radius:3px;overflow:hidden}
+.sb-f{height:100%;background:var(--pr);border-radius:3px;transition:width .6s ease-out}
+.sb-v{font-size:.78rem;font-weight:600;color:var(--tx);min-width:28px;text-align:right}
+.dis{background:var(--sfm);border:1px solid var(--bd);border-radius:var(--rm);padding:.85rem 1rem;margin:1rem 0}
+.dis-t{font-size:.78rem;color:var(--txm);line-height:1.5}
+.dis-u{background:var(--eml);border-color:var(--em)}.dis-u .dis-t{color:var(--em);font-weight:500}
+.tl{margin:.75rem 0}.tl-i{display:flex;gap:1rem;padding:.75rem 0;border-bottom:1px solid var(--bdl)}
+.tl-i:last-child{border-bottom:none}
+.tl-p{font-weight:600;font-size:.85rem;color:var(--pr);min-width:85px;flex-shrink:0}
+.tl-d{font-size:.9rem;color:var(--tx2)}
+.fq{border:1px solid var(--bdl);border-radius:var(--rm);margin-bottom:.5rem;overflow:hidden}
+.fq-q{padding:.85rem 1rem;font-size:.92rem;font-weight:600;color:var(--tx);cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--sf);transition:background var(--tr)}
+.fq-q:hover{background:var(--sfm)}
+.fq-ar{transition:transform var(--tr);font-size:.85rem;color:var(--txm)}
+.fq.open .fq-ar{transform:rotate(180deg)}
+.fq-a{padding:0 1rem .85rem;font-size:.88rem;color:var(--tx2);line-height:1.6;display:none}
+.fq.open .fq-a{display:block}
+.tabs{display:flex;gap:0;border-bottom:2px solid var(--bd);margin-bottom:1.5rem}
+.tab{padding:.65rem 1.25rem;font-size:.88rem;font-weight:600;color:var(--txm);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all var(--tr);background:none;border-top:none;border-left:none;border-right:none;font-family:var(--fb)}
+.tab:hover{color:var(--tx)}.tab.act{color:var(--pr);border-bottom-color:var(--pr)}
+.tag{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:20px;font-size:.72rem;font-weight:600;gap:.25rem}
+.tag-g{background:var(--okl);color:var(--ok)}.tag-r{background:var(--eml);color:var(--em)}
+.tag-o{background:var(--url);color:var(--ur)}.tag-b{background:var(--inl);color:var(--inf)}.tag-x{background:var(--sfm);color:var(--txm)}
+.sbox{background:var(--prl);border:1px solid rgba(27,107,90,.2);border-radius:var(--rl);padding:1.5rem}
+.si{display:flex;gap:.5rem;margin-bottom:.5rem;font-size:.9rem;color:var(--tx)}.si-i{flex-shrink:0}
+.hero{text-align:center;padding:3rem 1rem 2rem}
+.hero-b{display:inline-block;background:var(--prl);color:var(--pr);font-size:.75rem;font-weight:700;padding:.3rem .85rem;border-radius:20px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:1.25rem}
+.hero-t{font-family:var(--fd);font-size:2.75rem;font-weight:700;line-height:1.1;letter-spacing:-.035em;margin-bottom:1rem;max-width:560px;margin-left:auto;margin-right:auto}
+.hero-t span{color:var(--pr)}
+.hero-s{font-size:1.1rem;color:var(--tx2);max-width:520px;margin:0 auto 2rem;line-height:1.6}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:2rem 0;text-align:left}
+.fc{padding:1.25rem;border-radius:var(--rm);background:var(--sf);border:1px solid var(--bdl)}
+.fc-i{width:36px;height:36px;background:var(--prl);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:.65rem}
+.fc-t{font-weight:600;font-size:.9rem;color:var(--tx);margin-bottom:.25rem}
+.fc-d{font-size:.8rem;color:var(--txm);line-height:1.45}
+.edu-l{margin:.5rem 0 0 1.2rem}.edu-l li{margin-bottom:.35rem;font-size:.92rem;color:var(--tx2)}
+.dv{height:1px;background:var(--bd);margin:1.5rem 0}.sp{height:1.5rem}
+.ft{text-align:center;padding:2rem 1rem;margin-top:2rem;border-top:1px solid var(--bd)}
+.ft-t{font-size:.75rem;color:var(--txm);line-height:1.6}
+@media print{.hd,.pb,.btn,.ft,.nopr{display:none!important}.cd{box-shadow:none;border:1px solid #ddd;break-inside:avoid}body{background:#fff}}
+@media(max-width:600px){.hero-t{font-size:2rem}.cd{padding:1.25rem}.hxl{font-size:1.75rem}.rg{grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}.br{flex-direction:column}.br .btn{width:100%}.pc-h{flex-direction:column;gap:.5rem}}
+</style>
+</head>
+<body>
+<header class="hd"><div class="hd-in">
+<div class="logo" onclick="App.restart()"><div class="logo-i"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/><path d="M2 20h20"/><path d="M14 12v.01"/></svg></div>ChatBack</div>
+<span class="hd-badge">MSK Navigation</span>
+</div></header>
+<main class="mn" id="app"></main>
+<footer class="ft"><p class="ft-t">ChatBack &copy; 2026 — National MSK Navigation & Referral Intelligence Platform<br><strong>Not a medical device.</strong> Does not diagnose, prescribe, or replace professional medical care. Version 2.0.0</p></footer>
+<script>
+// ZIP DATABASE
+const ZipDB={
+prefixToState:{"010":"MA","011":"MA","012":"MA","013":"MA","014":"MA","015":"MA","016":"MA","017":"MA","018":"MA","019":"MA","020":"MA","021":"MA","022":"MA","023":"MA","024":"MA","025":"MA","026":"MA","027":"MA","028":"RI","029":"RI","030":"NH","031":"NH","032":"NH","033":"NH","034":"NH","035":"VT","036":"VT","037":"VT","038":"VT","039":"ME","040":"ME","041":"ME","042":"ME","043":"ME","044":"ME","045":"ME","046":"ME","047":"ME","048":"ME","049":"ME","050":"VT","051":"VT","052":"VT","053":"VT","054":"VT","055":"VT","056":"VT","060":"CT","061":"CT","062":"CT","063":"CT","064":"CT","065":"CT","066":"CT","067":"CT","068":"CT","069":"CT","070":"NJ","071":"NJ","072":"NJ","073":"NJ","074":"NJ","075":"NJ","076":"NJ","077":"NJ","078":"NJ","079":"NJ","080":"NJ","081":"NJ","082":"NJ","083":"NJ","084":"NJ","085":"NJ","086":"NJ","087":"NJ","088":"NJ","089":"NJ","100":"NY","101":"NY","102":"NY","103":"NY","104":"NY","105":"NY","106":"NY","107":"NY","108":"NY","109":"NY","110":"NY","111":"NY","112":"NY","113":"NY","114":"NY","115":"NY","116":"NY","117":"NY","118":"NY","119":"NY","120":"NY","121":"NY","122":"NY","123":"NY","124":"NY","125":"NY","126":"NY","127":"NY","128":"NY","129":"NY","130":"NY","131":"NY","132":"NY","133":"NY","134":"NY","135":"NY","136":"NY","137":"NY","138":"NY","139":"NY","140":"NY","141":"NY","142":"NY","143":"NY","144":"NY","145":"NY","146":"NY","147":"NY","148":"NY","149":"NY","150":"PA","151":"PA","152":"PA","153":"PA","154":"PA","155":"PA","156":"PA","157":"PA","158":"PA","159":"PA","160":"PA","161":"PA","162":"PA","163":"PA","164":"PA","165":"PA","166":"PA","167":"PA","168":"PA","169":"PA","170":"PA","171":"PA","172":"PA","173":"PA","174":"PA","175":"PA","176":"PA","177":"PA","178":"PA","179":"PA","180":"PA","181":"PA","182":"PA","183":"PA","184":"PA","185":"PA","186":"PA","187":"PA","188":"PA","189":"PA","190":"PA","191":"PA","192":"PA","193":"PA","194":"PA","195":"PA","196":"PA","197":"DE","198":"DE","199":"DE","200":"DC","201":"VA","202":"DC","203":"DC","204":"DC","205":"DC","206":"MD","207":"MD","208":"MD","209":"MD","210":"MD","211":"MD","212":"MD","214":"MD","215":"MD","216":"MD","217":"MD","218":"MD","219":"MD","220":"VA","221":"VA","222":"VA","223":"VA","224":"VA","225":"VA","226":"VA","227":"VA","228":"VA","229":"VA","230":"VA","231":"VA","232":"VA","233":"VA","234":"VA","235":"VA","236":"VA","237":"VA","238":"VA","239":"VA","240":"VA","241":"WV","242":"WV","243":"WV","244":"WV","245":"WV","246":"WV","247":"WV","248":"WV","249":"WV","250":"WV","251":"WV","252":"WV","253":"WV","254":"WV","255":"WV","256":"WV","257":"WV","258":"WV","259":"WV","260":"WV","261":"WV","262":"WV","263":"WV","264":"WV","265":"WV","266":"WV","267":"WV","268":"WV","270":"NC","271":"NC","272":"NC","273":"NC","274":"NC","275":"NC","276":"NC","277":"NC","278":"NC","279":"NC","280":"NC","281":"NC","282":"NC","283":"NC","284":"NC","285":"NC","286":"NC","287":"NC","288":"NC","289":"NC","290":"SC","291":"SC","292":"SC","293":"SC","294":"SC","295":"SC","296":"SC","297":"SC","298":"SC","299":"SC","300":"GA","301":"GA","302":"GA","303":"GA","304":"GA","305":"GA","306":"GA","307":"GA","308":"GA","309":"GA","310":"GA","311":"GA","312":"GA","313":"GA","314":"GA","315":"GA","316":"GA","317":"GA","318":"GA","319":"GA","320":"FL","321":"FL","322":"FL","323":"FL","324":"FL","325":"FL","326":"FL","327":"FL","328":"FL","329":"FL","330":"FL","331":"FL","332":"FL","333":"FL","334":"FL","335":"FL","336":"FL","337":"FL","338":"FL","339":"FL","340":"FL","350":"AL","351":"AL","352":"AL","353":"AL","354":"AL","355":"AL","356":"AL","357":"AL","358":"AL","359":"AL","360":"AL","361":"AL","362":"AL","363":"AL","364":"AL","365":"AL","366":"AL","367":"AL","368":"AL","369":"AL","370":"TN","371":"TN","372":"TN","373":"TN","374":"TN","375":"TN","376":"TN","377":"TN","378":"TN","379":"TN","380":"TN","381":"TN","382":"TN","383":"TN","384":"TN","385":"TN","386":"MS","387":"MS","388":"MS","389":"MS","390":"MS","391":"MS","392":"MS","393":"MS","394":"MS","395":"MS","396":"MS","397":"MS","400":"KY","401":"KY","402":"KY","403":"KY","404":"KY","405":"KY","406":"KY","407":"KY","408":"KY","409":"KY","410":"KY","411":"KY","412":"KY","413":"KY","414":"KY","415":"KY","416":"KY","417":"KY","418":"KY","420":"KY","421":"KY","422":"KY","423":"KY","424":"KY","425":"KY","426":"KY","427":"KY","430":"OH","431":"OH","432":"OH","433":"OH","434":"OH","435":"OH","436":"OH","437":"OH","438":"OH","439":"OH","440":"OH","441":"OH","442":"OH","443":"OH","444":"OH","445":"OH","446":"OH","447":"OH","448":"OH","449":"OH","450":"OH","451":"OH","452":"OH","453":"OH","454":"OH","455":"OH","456":"OH","457":"OH","458":"OH","460":"IN","461":"IN","462":"IN","463":"IN","464":"IN","465":"IN","466":"IN","467":"IN","468":"IN","469":"IN","470":"IN","471":"IN","472":"IN","473":"IN","474":"IN","475":"IN","476":"IN","477":"IN","478":"IN","479":"IN","480":"MI","481":"MI","482":"MI","483":"MI","484":"MI","485":"MI","486":"MI","487":"MI","488":"MI","489":"MI","490":"MI","491":"MI","492":"MI","493":"MI","494":"MI","495":"MI","496":"MI","497":"MI","498":"MI","499":"MI","500":"IA","501":"IA","502":"IA","503":"IA","504":"IA","505":"IA","506":"IA","507":"IA","508":"IA","509":"IA","510":"IA","511":"IA","512":"IA","513":"IA","514":"IA","515":"IA","516":"IA","520":"IA","521":"IA","522":"IA","523":"IA","524":"IA","525":"IA","526":"IA","527":"IA","528":"IA","530":"WI","531":"WI","532":"WI","534":"WI","535":"WI","537":"WI","538":"WI","539":"WI","540":"MN","541":"MN","543":"MN","544":"MN","545":"MN","546":"MN","547":"MN","548":"MN","549":"MN","550":"MN","551":"MN","553":"MN","554":"MN","555":"MN","556":"MN","557":"MN","558":"MN","559":"MN","560":"MN","561":"MN","562":"MN","563":"MN","564":"MN","565":"MN","566":"MN","567":"MN","570":"SD","571":"SD","572":"SD","573":"SD","574":"SD","575":"SD","576":"SD","577":"SD","580":"ND","581":"ND","582":"ND","583":"ND","584":"ND","585":"ND","586":"ND","587":"ND","588":"ND","590":"MT","591":"MT","592":"MT","593":"MT","594":"MT","595":"MT","596":"MT","597":"MT","598":"MT","599":"MT","600":"IL","601":"IL","602":"IL","603":"IL","604":"IL","605":"IL","606":"IL","607":"IL","608":"IL","609":"IL","610":"IL","611":"IL","612":"IL","613":"IL","614":"IL","615":"IL","616":"IL","617":"IL","618":"IL","619":"IL","620":"IL","621":"IL","622":"IL","623":"IL","624":"IL","625":"IL","626":"IL","627":"IL","628":"IL","629":"IL","630":"MO","631":"MO","633":"MO","634":"MO","635":"MO","636":"MO","637":"MO","638":"MO","639":"MO","640":"MO","641":"MO","644":"MO","645":"MO","646":"MO","647":"MO","648":"MO","649":"MO","650":"MO","651":"MO","652":"MO","653":"MO","654":"MO","655":"MO","656":"MO","657":"MO","658":"MO","660":"KS","661":"KS","662":"KS","664":"KS","665":"KS","666":"KS","667":"KS","668":"KS","669":"KS","670":"KS","671":"KS","672":"KS","673":"KS","674":"KS","675":"KS","676":"KS","677":"KS","678":"KS","679":"KS","680":"NE","681":"NE","683":"NE","684":"NE","685":"NE","686":"NE","687":"NE","688":"NE","689":"NE","690":"NE","691":"NE","692":"NE","693":"NE","700":"LA","701":"LA","703":"LA","704":"LA","705":"LA","706":"LA","707":"LA","708":"LA","710":"LA","711":"LA","712":"LA","713":"LA","714":"LA","716":"AR","717":"AR","718":"AR","719":"AR","720":"AR","721":"AR","722":"AR","723":"AR","724":"AR","725":"AR","726":"AR","727":"AR","728":"AR","729":"AR","730":"OK","731":"OK","734":"OK","735":"OK","736":"OK","737":"OK","738":"OK","739":"OK","740":"OK","741":"OK","743":"OK","744":"OK","745":"OK","746":"OK","747":"OK","748":"OK","749":"OK","750":"TX","751":"TX","752":"TX","753":"TX","754":"TX","755":"TX","756":"TX","757":"TX","758":"TX","759":"TX","760":"TX","761":"TX","762":"TX","763":"TX","764":"TX","765":"TX","766":"TX","767":"TX","768":"TX","769":"TX","770":"TX","771":"TX","772":"TX","773":"TX","774":"TX","775":"TX","776":"TX","777":"TX","778":"TX","779":"TX","780":"TX","781":"TX","782":"TX","783":"TX","784":"TX","785":"TX","786":"TX","787":"TX","788":"TX","789":"TX","790":"TX","791":"TX","792":"TX","793":"TX","794":"TX","795":"TX","796":"TX","797":"TX","798":"TX","799":"TX","800":"CO","801":"CO","802":"CO","803":"CO","804":"CO","805":"CO","806":"CO","807":"CO","808":"CO","809":"CO","810":"CO","811":"CO","812":"CO","813":"CO","814":"CO","815":"CO","816":"CO","820":"WY","821":"WY","822":"WY","823":"WY","824":"WY","825":"WY","826":"WY","827":"WY","828":"WY","829":"WY","830":"WY","831":"WY","832":"ID","833":"ID","834":"ID","835":"ID","836":"ID","837":"ID","838":"ID","840":"UT","841":"UT","842":"UT","843":"UT","844":"UT","845":"UT","846":"UT","847":"UT","850":"AZ","851":"AZ","852":"AZ","853":"AZ","855":"AZ","856":"AZ","857":"AZ","859":"AZ","860":"AZ","863":"NM","864":"NM","865":"NM","870":"NM","871":"NM","873":"NM","874":"NM","875":"NM","877":"NM","878":"NM","879":"NM","880":"NM","881":"NM","882":"NM","883":"NM","884":"NM","889":"NV","890":"NV","891":"NV","893":"NV","894":"NV","895":"NV","897":"NV","898":"NV","900":"CA","901":"CA","902":"CA","903":"CA","904":"CA","905":"CA","906":"CA","907":"CA","908":"CA","910":"CA","911":"CA","912":"CA","913":"CA","914":"CA","915":"CA","916":"CA","917":"CA","918":"CA","919":"CA","920":"CA","921":"CA","922":"CA","923":"CA","924":"CA","925":"CA","926":"CA","927":"CA","928":"CA","930":"CA","931":"CA","932":"CA","933":"CA","934":"CA","935":"CA","936":"CA","937":"CA","938":"CA","939":"CA","940":"CA","941":"CA","942":"CA","943":"CA","944":"CA","945":"CA","946":"CA","947":"CA","948":"CA","949":"CA","950":"CA","951":"CA","952":"CA","953":"CA","954":"CA","955":"CA","956":"CA","957":"CA","958":"CA","959":"CA","960":"CA","961":"CA","967":"HI","968":"HI","970":"OR","971":"OR","972":"OR","973":"OR","974":"OR","975":"OR","976":"OR","977":"OR","978":"OR","979":"OR","980":"WA","981":"WA","982":"WA","983":"WA","984":"WA","985":"WA","986":"WA","988":"WA","989":"WA","990":"WA","991":"WA","992":"WA","993":"WA","994":"WA","995":"AK","996":"AK","997":"AK","998":"AK","999":"AK"},
+stateNames:{AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",CT:"Connecticut",DE:"Delaware",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",DC:"District of Columbia"},
+metro:new Set(["100","101","102","103","104","110","111","112","900","901","902","903","904","905","606","607","608","770","771","772","773","852","853","191","190","921","920","752","751","750","787","786","322","321","330","331","332","333","303","300","301","802","800","801","981","980","982","021","020","022","550","551","553","370","371","372","631","630","481","480","150","151","840","841","200","201","202"]),
+cities:{AL:["Birmingham","Huntsville","Montgomery"],AK:["Anchorage","Fairbanks"],AZ:["Phoenix","Scottsdale","Tucson"],AR:["Little Rock","Fayetteville"],CA:["Los Angeles","San Francisco","San Diego"],CO:["Denver","Boulder","Colorado Springs"],CT:["Hartford","Stamford"],DE:["Wilmington","Dover"],FL:["Miami","Orlando","Tampa","Jacksonville"],GA:["Atlanta","Savannah"],HI:["Honolulu"],ID:["Boise"],IL:["Chicago","Naperville"],IN:["Indianapolis"],IA:["Des Moines"],KS:["Wichita","Overland Park"],KY:["Louisville","Lexington"],LA:["New Orleans","Baton Rouge"],ME:["Portland"],MD:["Baltimore","Bethesda"],MA:["Boston","Cambridge"],MI:["Detroit","Ann Arbor"],MN:["Minneapolis","Rochester"],MS:["Jackson"],MO:["St. Louis","Kansas City"],MT:["Billings"],NE:["Omaha"],NV:["Las Vegas","Reno"],NH:["Manchester"],NJ:["Newark","Princeton"],NM:["Albuquerque"],NY:["New York","Buffalo"],NC:["Charlotte","Raleigh"],ND:["Fargo"],OH:["Columbus","Cleveland"],OK:["Oklahoma City","Tulsa"],OR:["Portland","Eugene"],PA:["Philadelphia","Pittsburgh"],RI:["Providence"],SC:["Charleston"],SD:["Sioux Falls"],TN:["Nashville","Memphis"],TX:["Houston","Dallas","Austin","San Antonio"],UT:["Salt Lake City"],VT:["Burlington"],VA:["Richmond","Arlington"],WA:["Seattle","Bellevue"],WV:["Charleston"],WI:["Milwaukee","Madison"],WY:["Cheyenne"],DC:["Washington"]},
+lookup(z){if(!/^\d{5}$/.test(z))return null;const p=z.substring(0,3),st=this.prefixToState[p];if(!st)return null;const m=this.metro.has(p),c=m?"metro":(parseInt(p)%3===0?"rural":"suburban");return{zip:z,state:st,stateName:this.stateNames[st]||st,classification:c,searchRadius:c==="metro"?10:c==="suburban"?25:50,cities:this.cities[st]||["City Center"],providerDensity:c==="metro"?"high":c==="suburban"?"medium":"low"}}
+};
+
+// TRIAGE ENGINE
+const Triage={
+regions:{neck:{label:"Neck / Cervical Spine"},shoulder:{label:"Shoulder"},elbow:{label:"Elbow / Forearm"},wrist_hand:{label:"Wrist / Hand"},upper_back:{label:"Upper / Mid Back"},lower_back:{label:"Lower Back / Lumbar"},hip:{label:"Hip / Groin"},knee:{label:"Knee"},ankle_foot:{label:"Ankle / Foot"}},
+redFlags:[
+{id:"RF_CE",label:"Possible Cauda Equina Syndrome",triggers:["bowel_bladder","saddle_numb","bilateral_weakness"],severity:"EMERGENCY",action:"CALL 911 / GO TO ER IMMEDIATELY",desc:"Loss of bowel/bladder control with back pain may indicate cauda equina syndrome requiring emergency surgery."},
+{id:"RF_FX",label:"Possible Fracture",triggers:["trauma","no_bear_weight","deformity"],severity:"URGENT",action:"Seek immediate medical evaluation (ER or Urgent Care)",desc:"Signs suggest possible fracture requiring imaging."},
+{id:"RF_INF",label:"Possible Infection",triggers:["fever","red_hot_joint","post_surgery"],severity:"URGENT",action:"Seek immediate medical evaluation",desc:"Warmth, redness, fever with joint involvement may indicate infection."},
+{id:"RF_VASC",label:"Possible Vascular Emergency",triggers:["color_change","absent_pulse","cold_limb"],severity:"EMERGENCY",action:"CALL 911 / GO TO ER IMMEDIATELY",desc:"Loss of circulation requires emergency intervention."},
+{id:"RF_NEURO",label:"Progressive Neurological Deficit",triggers:["progressive_weakness","foot_drop","rapid_decline"],severity:"URGENT",action:"Seek immediate medical evaluation",desc:"Rapidly worsening neurological symptoms require urgent evaluation."},
+{id:"RF_CARDIAC",label:"Possible Cardiac Origin",triggers:["chest_exertion","left_arm_chest","jaw_sob"],severity:"EMERGENCY",action:"CALL 911 / GO TO ER IMMEDIATELY",desc:"These symptoms may indicate a cardiac event."},
+{id:"RF_CANCER",label:"Possible Serious Pathology",triggers:["weight_loss","night_pain","cancer_hx"],severity:"ELEVATED",action:"See your primary care physician within 1-2 days",desc:"These symptoms warrant evaluation to rule out serious conditions."}
+],
+screenQs:[
+{id:"onset",text:"How did your symptoms begin?",type:"single",opts:[{v:"trauma",l:"Injury or accident",rf:"trauma"},{v:"gradual",l:"Gradually over time"},{v:"sudden",l:"Suddenly without injury"},{v:"post_surg",l:"After recent surgery",rf:"post_surgery"}]},
+{id:"duration",text:"How long have you had these symptoms?",type:"single",opts:[{v:"lt2w",l:"Less than 2 weeks"},{v:"2_6w",l:"2-6 weeks"},{v:"6_12w",l:"6 weeks to 3 months"},{v:"3_6m",l:"3-6 months"},{v:"gt6m",l:"More than 6 months"}]},
+{id:"severity",text:"Rate your current pain level:",type:"scale",min:0,max:10},
+{id:"red_flags",text:"Are you experiencing any of the following? (Select all that apply)",type:"multi",opts:[{v:"fever",l:"Fever or chills",rf:"fever"},{v:"weight_loss",l:"Unexplained weight loss",rf:"weight_loss"},{v:"night_pain",l:"Constant pain that wakes you from sleep",rf:"night_pain"},{v:"bowel_bladder",l:"Loss of bowel or bladder control",rf:"bowel_bladder"},{v:"saddle_numb",l:"Numbness in groin/saddle area",rf:"saddle_numb"},{v:"bilateral_weakness",l:"Weakness in both legs",rf:"bilateral_weakness"},{v:"cancer_hx",l:"History of cancer with new bone/joint pain",rf:"cancer_hx"},{v:"none",l:"None of the above"}]}
+],
+regionQs:{
+lower_back:[{id:"lb_rad",text:"Does your pain radiate anywhere?",type:"single",opts:[{v:"stays",l:"Stays in my back"},{v:"buttock",l:"Into my buttock"},{v:"thigh",l:"Down my thigh"},{v:"below_knee",l:"Below my knee / into foot"},{v:"bilateral",l:"Both legs",rf:"bilateral_weakness"}]},{id:"lb_neuro",text:"Do you have numbness, tingling, or weakness?",type:"multi",opts:[{v:"numbness",l:"Numbness or tingling"},{v:"weakness",l:"Weakness walking"},{v:"foot_drop",l:"Foot slapping when walking",rf:"foot_drop"},{v:"progressive",l:"Getting rapidly worse daily",rf:"progressive_weakness"},{v:"none",l:"None"}]}],
+neck:[{id:"nk_rad",text:"Does your pain travel anywhere?",type:"single",opts:[{v:"stays",l:"Stays in neck"},{v:"shoulder",l:"Into shoulder(s)"},{v:"arm",l:"Down my arm"},{v:"hand",l:"Into hand/fingers"},{v:"both",l:"Both arms",rf:"bilateral_weakness"}]},{id:"nk_neuro",text:"Any of these symptoms?",type:"multi",opts:[{v:"numb",l:"Hand numbness"},{v:"grip",l:"Weak grip"},{v:"balance",l:"Balance problems",rf:"progressive_weakness"},{v:"none",l:"None"}]}],
+shoulder:[{id:"sh_mech",text:"What happened?",type:"single",opts:[{v:"overhead",l:"Repetitive overhead"},{v:"fall",l:"Fall on outstretched arm",rf:"trauma"},{v:"dislocation",l:"Came out of socket"},{v:"stiff",l:"Gradually got stiff"},{v:"unknown",l:"No clear cause"}]},{id:"sh_func",text:"What can't you do?",type:"multi",opts:[{v:"overhead",l:"Reach overhead"},{v:"behind",l:"Reach behind back"},{v:"sleep",l:"Sleep on it"},{v:"lift",l:"Lift objects"},{v:"dress",l:"Get dressed"}]}],
+knee:[{id:"kn_mech",text:"How did it start?",type:"single",opts:[{v:"twist",l:"Twisting/pivoting"},{v:"direct",l:"Direct impact",rf:"trauma"},{v:"gradual",l:"Gradually"},{v:"overuse",l:"Increased activity"},{v:"unknown",l:"Not sure"}]},{id:"kn_sx",text:"Which symptoms?",type:"multi",opts:[{v:"swelling",l:"Swelling"},{v:"locking",l:"Locks or catches"},{v:"gives_way",l:"Gives way"},{v:"grinding",l:"Grinding"},{v:"stiff",l:"Morning stiffness"},{v:"no_bear",l:"Cannot bear weight",rf:"no_bear_weight"}]}],
+hip:[{id:"hp_loc",text:"Where is your hip pain?",type:"single",opts:[{v:"groin",l:"Front/groin"},{v:"side",l:"Side"},{v:"buttock",l:"Deep buttock"},{v:"thigh",l:"Down thigh"}]},{id:"hp_func",text:"Activities affected?",type:"multi",opts:[{v:"walk",l:"Walking"},{v:"stairs",l:"Stairs"},{v:"rise",l:"Getting up"},{v:"shoes",l:"Shoes/socks"},{v:"sleep",l:"Sleeping on it"}]}],
+ankle_foot:[{id:"af_loc",text:"Where is your pain?",type:"single",opts:[{v:"heel",l:"Bottom of heel"},{v:"achilles",l:"Achilles"},{v:"outer",l:"Outside ankle"},{v:"inner",l:"Inside ankle"},{v:"ball",l:"Ball of foot"},{v:"toes",l:"Toes"}]},{id:"af_sx",text:"Symptoms?",type:"multi",opts:[{v:"swell",l:"Swelling"},{v:"bruise",l:"Bruising"},{v:"instab",l:"Ankle gives way"},{v:"morning",l:"Worse first steps"},{v:"no_walk",l:"Cannot walk",rf:"no_bear_weight"}]}],
+elbow:[{id:"el_loc",text:"Where is the pain?",type:"single",opts:[{v:"outer",l:"Outside"},{v:"inner",l:"Inside"},{v:"back",l:"Back"},{v:"front",l:"Front"}]}],
+wrist_hand:[{id:"wh_sx",text:"Symptoms?",type:"multi",opts:[{v:"numb",l:"Numbness/tingling"},{v:"night",l:"Worse at night"},{v:"click",l:"Clicking/locking"},{v:"lump",l:"Visible lump"},{v:"weak",l:"Weak grip"}]}],
+upper_back:[{id:"ub_char",text:"Describe the pain:",type:"single",opts:[{v:"ache",l:"Deep aching"},{v:"sharp",l:"Sharp with movement"},{v:"burning",l:"Burning between blades"},{v:"wrap",l:"Wraps around ribs"}]}]
+},
+funcQs:[
+{id:"f_daily",text:"Impact on daily activities?",opts:[{v:0,l:"Not at all"},{v:1,l:"Mildly"},{v:2,l:"Moderately"},{v:3,l:"Significantly"},{v:4,l:"Severely"}]},
+{id:"f_work",text:"Impact on work?",opts:[{v:0,l:"No effect"},{v:1,l:"Minor"},{v:2,l:"Modified work"},{v:3,l:"Missed work"},{v:4,l:"Unable to work"}]},
+{id:"f_sleep",text:"Impact on sleep?",opts:[{v:0,l:"No effect"},{v:1,l:"Occasionally"},{v:2,l:"Regularly wakes me"},{v:3,l:"Significant loss"},{v:4,l:"Barely sleeping"}]},
+{id:"f_activity",text:"Impact on physical activity?",opts:[{v:0,l:"No effect"},{v:1,l:"Slightly"},{v:2,l:"Moderately"},{v:3,l:"Significantly"},{v:4,l:"Unable"}]}
+],
+histQs:[
+{id:"h_pt",text:"Tried physical therapy?",type:"single",opts:[{v:"no",l:"No"},{v:"helped",l:"Yes, helped"},{v:"partial",l:"Yes, partially"},{v:"no_help",l:"Yes, didn't help"}]},
+{id:"h_imaging",text:"Had imaging?",type:"multi",opts:[{v:"none",l:"None"},{v:"xray",l:"X-ray"},{v:"mri",l:"MRI"},{v:"ct",l:"CT scan"},{v:"us",l:"Ultrasound"}]},
+{id:"h_tx",text:"Treatments tried?",type:"multi",opts:[{v:"none",l:"Nothing"},{v:"otc",l:"OTC meds"},{v:"ice",l:"Ice/heat"},{v:"brace",l:"Brace"},{v:"inj",l:"Injection(s)"},{v:"chiro",l:"Chiropractic"},{v:"massage",l:"Massage"},{v:"surg",l:"Surgery"}]},
+{id:"h_lifestyle",text:"Activity level?",type:"single",opts:[{v:"sed",l:"Sedentary"},{v:"light",l:"Lightly active"},{v:"mod",l:"Moderately active"},{v:"very",l:"Very active / athlete"}]}
+],
+process(region,ans){
+const r={region,regionLabel:this.regions[region]?.label||region,riskLevel:"standard",redFlags:[],funcScore:0,funcCat:"",urgency:"",providers:[],visitPrep:[]};
+const rf=new Set();
+Object.values(ans).forEach(a=>{if(Array.isArray(a))a.forEach(x=>{if(x.rf)rf.add(x.rf)});else if(a&&a.rf)rf.add(a.rf)});
+this.redFlags.forEach(f=>{const m=f.triggers.filter(t=>rf.has(t));if(m.length>0)r.redFlags.push({...f,matched:m})});
+if(r.redFlags.some(f=>f.severity==="EMERGENCY"))r.riskLevel="emergency";
+else if(r.redFlags.some(f=>f.severity==="URGENT"))r.riskLevel="urgent";
+else if(r.redFlags.some(f=>f.severity==="ELEVATED"))r.riskLevel="elevated";
+let ft=0,fc=0;["f_daily","f_work","f_sleep","f_activity"].forEach(id=>{if(ans[id]!==undefined){ft+=(typeof ans[id]==='object'?ans[id].v:ans[id])||0;fc++}});
+const pct=fc>0?(ft/(fc*4))*100:0;r.funcScore=ft;
+r.funcCat=pct<=25?"minimal":pct<=50?"moderate":pct<=75?"significant":"severe";
+if(r.riskLevel==="emergency"){r.providers=[{type:"emergency_department",label:"Emergency Department",priority:1,reason:"Red flag symptoms detected"}];return r}
+if(r.riskLevel==="urgent"){r.providers=[{type:"urgent_care_ortho",label:"Orthopedic Urgent Care",priority:1,reason:"Urgent symptoms detected"}];return r}
+const sev=ans.severity||0,dur=ans.duration?.v,ps=[];
+if(ans.onset?.v==="trauma"){ps.push({type:"orthopedic_surgeon",label:"Orthopedic Surgeon",priority:1,reason:"Traumatic onset"});ps.push({type:"sports_medicine",label:"Sports Medicine",priority:2,reason:"Injury evaluation"})}
+if((dur==="3_6m"||dur==="gt6m")&&ans.h_pt?.v==="no_help")ps.push({type:"orthopedic_surgeon",label:"Orthopedic Surgeon",priority:1,reason:"Chronic, unresponsive to PT"});
+if(r.funcCat==="severe"&&!ps.some(p=>p.type==="orthopedic_surgeon"))ps.push({type:"orthopedic_surgeon",label:"Orthopedic Surgeon",priority:1,reason:"Severe functional limitation"});
+if(region==="lower_back"&&ans.lb_rad?.v==="below_knee")ps.push({type:"spine_specialist",label:"Spine Specialist",priority:1,reason:"Radicular symptoms below knee"});
+if(region==="knee"&&Array.isArray(ans.kn_sx)&&ans.kn_sx.some(s=>s.v==="locking"))ps.push({type:"orthopedic_surgeon",label:"Orthopedic Surgeon",priority:1,reason:"Mechanical locking"});
+if(ps.length===0){if(sev>=7)ps.push({type:"orthopedic_surgeon",label:"Orthopedic Surgeon",priority:1,reason:"High pain severity"});ps.push({type:"physical_therapist",label:"Physical Therapist",priority:ps.length===0?1:2,reason:"Conservative management"})}
+if(!ps.some(p=>p.type==="physical_therapist"))ps.push({type:"physical_therapist",label:"Physical Therapist",priority:ps.length+1,reason:"Rehabilitation"});
+if(!ps.some(p=>p.type==="sports_medicine"))ps.push({type:"sports_medicine",label:"Sports Medicine",priority:ps.length+1,reason:"Specialist option"});
+ps.push({type:"pain_management",label:"Pain Management",priority:ps.length+1,reason:"Pain management option"});
+r.providers=ps;
+r.urgency=sev>=9||r.funcCat==="severe"?"WITHIN 48 HOURS":sev>=7||r.funcCat==="significant"?"WITHIN 1 WEEK":dur==="gt6m"?"WITHIN 2 WEEKS":"ROUTINE (2-4 weeks)";
+return r}
+};
+// PROVIDER ENGINE
+const Providers={
+fN:["James","Sarah","Michael","Jennifer","Robert","Emily","David","Amanda","Thomas","Jessica","Christopher","Nicole","Andrew","Laura","Matthew","Rachel"],
+lN:["Anderson","Chen","Patel","Williams","Rodriguez","Kim","Thompson","Garcia","Martinez","Johnson","Lee","Brown","Davis","Wilson","Miller","Moore"],
+ins:["BCBS","Aetna","Cigna","UnitedHealthcare","Humana","Medicare","Medicaid","Tricare"],
+specs:{orthopedic_surgeon:["Joint Replacement","Sports Medicine","Hand & Wrist","Foot & Ankle","Spine","Trauma"],spine_specialist:["Minimally Invasive","Complex Spine","Cervical","Lumbar"],sports_medicine:["ACL/Knee","Shoulder","Hip Preservation","Regenerative"],physical_therapist:["Orthopedic PT","Sports Rehab","Manual Therapy","Spine Rehab"],pain_management:["Interventional","Spine Injections","Regenerative"],urgent_care_ortho:["Fracture Care","Acute Injuries"],telehealth_ortho:["General MSK","Second Opinions"]},
+tL:{orthopedic_surgeon:"Orthopedic Surgeon",spine_specialist:"Spine Specialist",sports_medicine:"Sports Medicine",physical_therapist:"Physical Therapist",pain_management:"Pain Management",urgent_care_ortho:"Ortho Urgent Care",emergency_department:"Emergency Dept",telehealth_ortho:"Tele-Ortho"},
+generate(loc,provTypes){
+const list=[];let id=1;
+provTypes.forEach(pt=>{
+const cnt=loc.classification==="metro"?4:loc.classification==="suburban"?2:1;
+for(let i=0;i<cnt;i++){
+const fn=this.fN[Math.floor(Math.random()*this.fN.length)],ln=this.lN[Math.floor(Math.random()*this.lN.length)];
+const sp=(this.specs[pt.type]||["General MSK"]);
+const dist=loc.classification==="metro"?+(Math.random()*12).toFixed(1):loc.classification==="suburban"?+(5+Math.random()*20).toFixed(1):+(15+Math.random()*35).toFixed(1);
+const wait={orthopedic_surgeon:{metro:7,suburban:10,rural:21},spine_specialist:{metro:10,suburban:14,rural:28},sports_medicine:{metro:5,suburban:7,rural:14},physical_therapist:{metro:3,suburban:5,rural:7},pain_management:{metro:7,suburban:14,rural:21},urgent_care_ortho:{metro:0,suburban:0,rural:1},emergency_department:{metro:0,suburban:0,rural:0},telehealth_ortho:{metro:1,suburban:1,rural:1}};
+const w=(wait[pt.type]?.[loc.classification]||7)+Math.floor(Math.random()*5);
+const nd=new Date();nd.setDate(nd.getDate()+w);
+const ic=2+Math.floor(Math.random()*4);
+list.push({id:'PRV-'+(id++),name:'Dr. '+fn+' '+ln,creds:pt.type==='physical_therapist'?'PT, DPT, OCS':'MD',type:pt.type,typeLabel:this.tL[pt.type]||pt.type,sub:sp[Math.floor(Math.random()*sp.length)],city:loc.cities[i%loc.cities.length],state:loc.state,dist,rating:+(3.5+Math.random()*1.5).toFixed(1),reviews:20+Math.floor(Math.random()*280),acceptNew:Math.random()>.15,nextAvail:nd.toISOString().split('T')[0],wait:w,sponsored:Math.random()>.8,insurance:[...this.ins].sort(()=>Math.random()-.5).slice(0,ic),virtual:pt.type==='telehealth_ortho'||Math.random()>.5,facility:Math.random()>.5?'Private Practice':'Hospital-Affiliated'})}});
+return list},
+rank(provs,triage,loc){
+return provs.map(p=>{
+const sc={},reasons=[],rec=triage.providers.map(x=>x.type),pri=rec.indexOf(p.type);
+sc.specialty=pri===0?100:pri===1?80:pri>=2?60:30;
+if(pri===0)reasons.push('✓ Top recommended for your condition');else if(pri===1)reasons.push('✓ Highly recommended');
+sc.distance=p.dist<=5?100:p.dist<=15?80:p.dist<=30?60:Math.max(10,40-p.dist);
+reasons.push(p.dist<=5?'✓ Very close ('+p.dist+' mi)':p.dist<=15?'✓ Nearby ('+p.dist+' mi)':'○ '+p.dist+' mi away');
+sc.availability=p.wait<=2?100:p.wait<=7?80:p.wait<=14?60:Math.max(20,50-p.wait);
+reasons.push(p.wait<=3?'✓ Available soon':'○ ~'+p.wait+' day wait');
+sc.rating=(p.rating/5)*100;if(p.rating>=4.5)reasons.push('✓ Highly rated ('+p.rating+'★)');
+const total=Math.round(sc.specialty*.30+sc.distance*.25+sc.availability*.20+sc.rating*.15+(p.acceptNew?10:0)*.10);
+if(p.acceptNew)reasons.push('✓ Accepting new patients');if(p.virtual)reasons.push('✓ Virtual visits');
+return{...p,matchScore:total,scores:sc,reasons,badge:total>=75?'high':total>=50?'medium':'low'}
+}).sort((a,b)=>{
+if(triage.riskLevel==='emergency'||triage.riskLevel==='urgent'){const aE=a.type==='emergency_department'||a.type==='urgent_care_ortho',bE=b.type==='emergency_department'||b.type==='urgent_care_ortho';if(aE&&!bE)return-1;if(!aE&&bE)return 1}
+return b.matchScore-a.matchScore})}
+};
+
+// EDUCATION HUB
+const Edu={
+disc:"This information is for educational purposes only and does not constitute medical advice. Always consult a qualified healthcare provider.",
+data:{
+lower_back:{title:"Lower Back Pain",overview:"Lower back pain affects ~80% of adults. Most episodes improve within 2-6 weeks.",causes:["Muscle/ligament strain","Disc issues","Joint irritation","Postural stress"],timeline:[{p:"0-2 wk",d:"Acute — gentle movement"},{p:"2-6 wk",d:"Gradual improvement"},{p:"6-12 wk",d:"Most resolves"},{p:"3+ mo",d:"Further evaluation if persisting"}],conservative:["Stay active","Gentle walking","Ice then heat","OTC anti-inflammatories","Core activation","Ergonomic mods"],risks:["Sedentary lifestyle","Obesity","Poor posture","Heavy lifting","Smoking"],faq:[{q:"Should I get an MRI right away?",a:"For most acute back pain without red flags, imaging isn't recommended in the first 4-6 weeks."},{q:"Is bed rest helpful?",a:"Research shows staying active leads to better outcomes than bed rest."},{q:"Will I need surgery?",a:"Less than 5% of people with back pain require surgery."}]},
+neck:{title:"Neck Pain",overview:"Usually resolves with conservative care. Most episodes relate to muscle tension or posture.",causes:["Muscle strain","Tech neck","Joint dysfunction","Whiplash"],timeline:[{p:"0-2 wk",d:"Gentle movement"},{p:"2-6 wk",d:"Most improves"},{p:"6-12 wk",d:"Strengthening focus"}],conservative:["Range of motion","Postural correction","Ergonomic setup","Screen breaks","Stretching"],risks:["Poor posture","Screen time","Stress"],faq:[{q:"Is tech neck real?",a:"Yes — forward head posture significantly increases cervical strain."}]},
+shoulder:{title:"Shoulder Pain",overview:"Most mobile joint — injury prone. Most acute problems respond to conservative care.",causes:["Rotator cuff","Impingement","Frozen shoulder","Labral tear"],timeline:[{p:"0-2 wk",d:"Protection phase"},{p:"2-6 wk",d:"ROM restoration"},{p:"6-12 wk",d:"Strengthening"},{p:"3-6 mo",d:"Full return"}],conservative:["Relative rest","Ice","Pendulum exercises","Rotator cuff strengthening","Scapular stabilization"],risks:["Overhead work/sports","Age >40","Previous injury"],faq:[{q:"Can a torn rotator cuff heal without surgery?",a:"Many tears, especially partial, can be managed with physical therapy."}]},
+knee:{title:"Knee Pain",overview:"Common, especially in active people. Many conditions respond to conservative management.",causes:["Meniscus tear","Ligament sprain","Patellofemoral pain","Tendinitis","Arthritis"],timeline:[{p:"0-2 wk",d:"RICE protocol"},{p:"2-6 wk",d:"Progressive loading"},{p:"6-12 wk",d:"Strengthening"},{p:"3-9 mo",d:"Return to sport"}],conservative:["RICE","Quad strengthening","Hip/core strengthening","Balance training","Activity modification"],risks:["Previous injury","Weakness","Obesity","High-impact sports"],faq:[{q:"Do I need surgery?",a:"Many knee conditions improve without surgery. PT is equally effective for many degenerative conditions."}]},
+hip:{title:"Hip Pain",overview:"Can come from the joint, muscles, or spine. Location helps guide care.",causes:["Hip flexor strain","Bursitis","Labral issue","Arthritis"],timeline:[{p:"0-2 wk",d:"Relative rest"},{p:"2-6 wk",d:"Rehab"},{p:"6-12 wk",d:"Return to activity"}],conservative:["Rest from aggravators","Ice/heat","Stretching","Hip strengthening","Core work"],risks:["Activity increase","Imbalance","Running","Age"],faq:[{q:"Is hip pain always from the hip?",a:"No — often from lower back, SI joint, or muscles."}]},
+ankle_foot:{title:"Ankle & Foot Pain",overview:"Range from sprains to plantar fasciitis.",causes:["Ankle sprain","Plantar fasciitis","Achilles tendinitis","Stress fracture"],timeline:[{p:"0-2 wk",d:"Protection"},{p:"2-6 wk",d:"Progressive loading"},{p:"6-12 wk",d:"Strengthening"}],conservative:["RICE","Supportive footwear","Calf/plantar stretching","Gradual return","Taping"],risks:["Poor footwear","Sudden activity increase"],faq:[{q:"Will plantar fasciitis go away?",a:"Most cases resolve with stretching and supportive footwear over weeks to months."}]},
+elbow:{title:"Elbow Pain",overview:"Often overuse-related (tennis/golfer's elbow).",causes:["Lateral epicondylitis","Medial epicondylitis","Bursitis"],timeline:[{p:"0-2 wk",d:"Rest from aggravators"},{p:"2-8 wk",d:"Gradual loading"},{p:"3-6 mo",d:"Full recovery"}],conservative:["Activity modification","Counterforce brace","Eccentric strengthening","Ice"],risks:["Repetitive gripping","Computer use","Racquet sports"],faq:[{q:"What is tennis elbow?",a:"Tendon irritation at outer elbow from repetitive wrist use. You don't need to play tennis."}]},
+wrist_hand:{title:"Wrist & Hand Pain",overview:"Carpal tunnel to trigger finger — often repetitive use related.",causes:["Carpal tunnel","De Quervain's","Trigger finger","Ganglion"],timeline:[{p:"0-4 wk",d:"Splinting, modification"},{p:"4-12 wk",d:"Rehab"}],conservative:["Wrist splint (night)","Ergonomic changes","Nerve glides","Activity modification"],risks:["Repetitive hand use","Computer/phone","Diabetes"],faq:[{q:"Do I have carpal tunnel?",a:"Numbness in thumb/index/middle fingers especially at night is characteristic. A provider can confirm."}]},
+upper_back:{title:"Upper & Mid Back Pain",overview:"Commonly posture-related, especially desk workers.",causes:["Thoracic strain","Postural syndrome","Costovertebral irritation"],timeline:[{p:"0-2 wk",d:"Postural correction"},{p:"2-6 wk",d:"Most improves"}],conservative:["Postural retraining","Thoracic mobility","Scapular strengthening","Ergonomic setup","Movement breaks"],risks:["Desk work","Poor posture","Deconditioning"],faq:[{q:"Why does sitting cause upper back pain?",a:"Prolonged sitting promotes forward-rounded posture, stressing thoracic structures."}]}
+},
+get(r){return this.data[r]||this.data.lower_back}
+};
+
+// =========== APP CONTROLLER ===========
+const App={
+s:{step:'welcome',zip:'',loc:null,region:null,answers:{},triage:null,providers:[],tab:'providers',_ze:''},
+restart(){this.s={step:'welcome',zip:'',loc:null,region:null,answers:{},triage:null,providers:[],tab:'providers',_ze:''};this.render();window.scrollTo({top:0,behavior:'smooth'})},
+go(step){this.s.step=step;this.render();window.scrollTo({top:0,behavior:'smooth'})},
+
+render(){
+const el=document.getElementById('app');if(!el)return;
+const steps=['zip','region','screening','symptoms','functional','history','results'];
+const idx=steps.indexOf(this.s.step);
+const pct=idx>=0?Math.round((idx/(steps.length-1))*100):0;
+const labels=['Location','Body Area','Screening','Symptoms','Impact','History','Results'];
+let h='';
+if(this.s.step!=='welcome'){
+h+=`<div class="pb"><div class="pb-t"><div class="pb-f" style="width:${pct}%"></div></div><div class="pb-ls">${labels.map((l,i)=>`<span class="pb-l ${i<idx?'done':''} ${i===idx?'act':''}">${l}</span>`).join('')}</div></div>`;
+}
+h+=`<div class="step">${this['r_'+this.s.step]()}</div>`;
+el.innerHTML=h;this.bind()},
+
+bind(){document.querySelectorAll('.fq-q').forEach(el=>{el.onclick=()=>el.parentElement.classList.toggle('open')})},
+
+setAns(id,val){this.s.answers[id]=val;this.render()},
+toggleMulti(id,val){
+if(!this.s.answers[id])this.s.answers[id]=[];
+const arr=this.s.answers[id];
+if(val.v==='none'){this.s.answers[id]=[val];this.render();return}
+const filtered=arr.filter(x=>x.v!=='none');
+const idx=filtered.findIndex(x=>x.v===val.v);
+if(idx>=0)filtered.splice(idx,1);else filtered.push(val);
+this.s.answers[id]=filtered;this.render()},
+
+renderQ(q){
+if(q.type==='scale'){
+const val=this.s.answers[q.id]||0;
+return`<div class="ig"><label class="lb">${q.text}</label><div class="sc-v">${val}</div><div class="sc"><input type="range" class="sc-i" min="${q.min}" max="${q.max}" value="${val}" oninput="App.s.answers['${q.id}']=parseInt(this.value);document.querySelector('.sc-v').textContent=this.value"></div><div class="sc-ls"><span class="cap">No pain</span><span class="cap">Worst imaginable</span></div></div>`}
+if(q.type==='multi'){
+const sel=this.s.answers[q.id]||[];
+return`<div class="ig"><label class="lb">${q.text}</label><div class="opts">${q.opts.map(o=>{
+const s=sel.some(x=>x.v===o.v);
+const obj=JSON.stringify(o).replace(/'/g,"\\'").replace(/"/g,'&quot;');
+return`<div class="opt ${s?'sel':''}" onclick='App.toggleMulti("${q.id}",${JSON.stringify(o)})'><div class="opt-c"></div><div class="opt-t">${o.l}</div></div>`}).join('')}</div></div>`}
+// single
+const sel=this.s.answers[q.id];
+return`<div class="ig"><label class="lb">${q.text}</label><div class="opts">${q.opts.map(o=>{
+const s=sel?.v===o.v;
+return`<div class="opt ${s?'sel':''}" onclick='App.setAns("${q.id}",${JSON.stringify(o)})'><div class="opt-r"></div><div class="opt-t">${o.l}</div></div>`}).join('')}</div></div>`},
+
+// WELCOME
+r_welcome(){return`<div class="hero"><div class="hero-b">National MSK Navigation Platform</div><h1 class="hero-t">Navigate your <span>musculoskeletal</span> health with confidence</h1><p class="hero-s">Structured symptom assessment, transparent provider matching, and personalized visit preparation — all in one platform.</p><button class="btn btn-p btn-lg" onclick="App.go('zip')">Start Your Assessment</button><div class="fg"><div class="fc"><div class="fc-i">🔍</div><div class="fc-t">Structured Triage</div><div class="fc-d">Rules-based screening with red flag detection</div></div><div class="fc"><div class="fc-i">📍</div><div class="fc-t">ZIP-Code Intelligence</div><div class="fc-d">National provider matching by location</div></div><div class="fc"><div class="fc-i">📊</div><div class="fc-t">Match Transparency</div><div class="fc-d">See why each provider was recommended</div></div><div class="fc"><div class="fc-i">📋</div><div class="fc-t">Visit Preparation</div><div class="fc-d">Generate a summary for your appointment</div></div></div></div><div class="dis"><p class="dis-t">${Edu.disc} ChatBack does not diagnose, prescribe, or replace clinical care.</p></div>`},
+
+// ZIP
+r_zip(){const e=this.s._ze;return`<div class="cd cd-e"><p class="hsm">Step 1</p><h2 class="hlg">Enter your ZIP code</h2><p class="bds">Helps us find providers near you.</p><div class="sp"></div><div class="ig"><label class="lb">ZIP Code</label><input class="inp ${e?'inp-err':''}" type="text" id="zipI" maxlength="5" placeholder="e.g. 32771" value="${this.s.zip}" inputmode="numeric"></div>${e?`<p class="cap" style="color:var(--em);margin-top:-.8rem;margin-bottom:.5rem">${e}</p>`:''}<div class="br br-b"><button class="btn btn-g" onclick="App.go('welcome')">Back</button><button class="btn btn-p" onclick="App.subZip()">Continue</button></div></div>`},
+subZip(){const v=document.getElementById('zipI').value.trim();this.s.zip=v;const loc=ZipDB.lookup(v);if(!loc){this.s._ze='Please enter a valid 5-digit U.S. ZIP code.';this.render();return}this.s._ze='';this.s.loc=loc;this.go('region')},
+
+// REGION
+r_region(){const icons={neck:"🦴",shoulder:"💪",elbow:"🦵",wrist_hand:"✋",upper_back:"🔙",lower_back:"⬇️",hip:"🦿",knee:"🦵",ankle_foot:"🦶"};return`<div class="cd cd-e"><p class="hsm">Step 2</p><h2 class="hlg">Where is your primary concern?</h2><p class="bds">Select the body area with your main issue.</p><div class="rg">${Object.entries(Triage.regions).map(([k,r])=>`<div class="rc ${this.s.region===k?'sel':''}" onclick="App.s.region='${k}';App.render()"><div class="rc-i">${icons[k]||'🔷'}</div><div class="rc-l">${r.label}</div></div>`).join('')}</div><div class="br br-b"><button class="btn btn-g" onclick="App.go('zip')">Back</button><button class="btn btn-p" ${!this.s.region?'disabled':''} onclick="App.go('screening')">Continue</button></div></div>`},
+
+// SCREENING
+r_screening(){return`<div class="cd cd-e"><p class="hsm">Step 3 — Safety Screening</p><h2 class="hlg">General symptom information</h2><p class="bds">These questions help identify urgent issues.</p><div class="sp"></div>${Triage.screenQs.map(q=>this.renderQ(q)).join('<div class="dv"></div>')}<div class="br br-b"><button class="btn btn-g" onclick="App.go('region')">Back</button><button class="btn btn-p" onclick="App.subScreen()">Continue</button></div></div>`},
+subScreen(){
+const rf=new Set();Object.values(this.s.answers).forEach(a=>{if(Array.isArray(a))a.forEach(x=>{if(x.rf)rf.add(x.rf)});else if(a?.rf)rf.add(a.rf)});
+if(Triage.redFlags.some(f=>f.severity==='EMERGENCY'&&f.triggers.some(t=>rf.has(t)))){this.s.triage=Triage.process(this.s.region,this.s.answers);this.go('results')}
+else this.go('symptoms')},
+
+// SYMPTOMS
+r_symptoms(){const qs=Triage.regionQs[this.s.region]||[];if(!qs.length)return this.r_functional();return`<div class="cd cd-e"><p class="hsm">Step 4 — ${Triage.regions[this.s.region]?.label||''} Details</p><h2 class="hlg">Tell us more about your symptoms</h2><div class="sp"></div>${qs.map(q=>this.renderQ(q)).join('<div class="dv"></div>')}<div class="br br-b"><button class="btn btn-g" onclick="App.go('screening')">Back</button><button class="btn btn-p" onclick="App.go('functional')">Continue</button></div></div>`},
+
+// FUNCTIONAL
+r_functional(){return`<div class="cd cd-e"><p class="hsm">Step 5 — Functional Impact</p><h2 class="hlg">How are symptoms affecting you?</h2><p class="bds">Helps match the right level of care.</p><div class="sp"></div>${Triage.funcQs.map(q=>`<div class="ig"><label class="lb">${q.text}</label><div class="opts">${q.opts.map(o=>{const s=this.s.answers[q.id]?.v===o.v;return`<div class="opt ${s?'sel':''}" onclick='App.setAns("${q.id}",${JSON.stringify(o)})'><div class="opt-r"></div><div class="opt-t">${o.l}</div></div>`}).join('')}</div></div>`).join('')}<div class="br br-b"><button class="btn btn-g" onclick="App.go('symptoms')">Back</button><button class="btn btn-p" onclick="App.go('history')">Continue</button></div></div>`},
+
+// HISTORY
+r_history(){return`<div class="cd cd-e"><p class="hsm">Step 6 — Treatment History</p><h2 class="hlg">Your background</h2><p class="bds">Helps guide recommendations.</p><div class="sp"></div>${Triage.histQs.map(q=>this.renderQ(q)).join('<div class="dv"></div>')}<div class="br br-b"><button class="btn btn-g" onclick="App.go('functional')">Back</button><button class="btn btn-p" onclick="App.finalize()">View Results</button></div></div>`},
+
+finalize(){this.s.triage=Triage.process(this.s.region,this.s.answers);const raw=Providers.generate(this.s.loc,this.s.triage.providers);this.s.providers=Providers.rank(raw,this.s.triage,this.s.loc);this.go('results')},
+
+// RESULTS
+r_results(){
+const t=this.s.triage;if(!t){this.finalize();return'<p>Processing...</p>'}
+const isEm=t.riskLevel==='emergency',isUr=t.riskLevel==='urgent';const edu=Edu.get(this.s.region);let h='';
+if(isEm||isUr){h+=`<div class="cd ${isEm?'cd-em':'cd-ur'}"><h2 class="hlg" style="color:${isEm?'var(--em)':'var(--ur)'}">${isEm?'⚠️ Emergency Symptoms Detected':'⚡ Urgent Symptoms Detected'}</h2>${t.redFlags.map(rf=>`<div style="margin:.75rem 0"><strong style="color:${isEm?'var(--em)':'var(--ur)'}">${rf.label}</strong><p class="bds">${rf.desc}</p><p style="font-weight:700;margin-top:.35rem;font-size:1.05rem;color:${isEm?'var(--em)':'var(--ur)'}">${rf.action}</p></div>`).join('')}${isEm?'<a href="tel:911" class="btn btn-em btn-f" style="margin-top:1rem">Call 911 Now</a>':''}</div>`}
+// Summary
+h+=`<div class="cd cd-e"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem"><h2 class="hlg">Assessment Summary</h2><span class="tag ${t.riskLevel==='emergency'?'tag-r':t.riskLevel==='urgent'||t.riskLevel==='elevated'?'tag-o':'tag-g'}">${t.riskLevel.toUpperCase()}</span></div><div class="dv"></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem"><div><p class="cap">Body Region</p><p class="bd" style="font-weight:600">${t.regionLabel}</p></div><div><p class="cap">Location</p><p class="bd" style="font-weight:600">${this.s.loc?.stateName||''} (${this.s.zip})</p></div><div><p class="cap">Functional Impact</p><p class="bd" style="font-weight:600">${t.funcCat.charAt(0).toUpperCase()+t.funcCat.slice(1)} (${t.funcScore}/16)</p></div><div><p class="cap">Pain Level</p><p class="bd" style="font-weight:600">${this.s.answers.severity||0}/10</p></div>${t.urgency?`<div><p class="cap">Urgency</p><p class="bd" style="font-weight:600;color:var(--pr)">${t.urgency}</p></div>`:''}</div></div>`;
+if(!isEm){
+const tabs=[{k:'providers',l:'Provider Matches'},{k:'education',l:'Condition Info'},{k:'visitprep',l:'Visit Prep'}];
+h+=`<div class="tabs nopr">${tabs.map(t=>`<button class="tab ${this.s.tab===t.k?'act':''}" onclick="App.s.tab='${t.k}';App.render()">${t.l}</button>`).join('')}</div>`;
+if(this.s.tab==='providers')h+=this.rProviders();
+else if(this.s.tab==='education')h+=this.rEdu(edu);
+else h+=this.rVisitPrep();
+}
+h+=`<div class="dis"><p class="dis-t">${Edu.disc}</p></div>`;
+h+=`<div class="br nopr"><button class="btn btn-s" onclick="window.print()">🖨 Print Summary</button><button class="btn btn-g" onclick="App.restart()">Start Over</button></div>`;
+return h},
+
+rProviders(){
+const ps=this.s.providers;if(!ps.length)return'<div class="cd"><p class="bd">No providers generated.</p></div>';
+const org=ps.filter(p=>!p.sponsored),sp=ps.filter(p=>p.sponsored);
+let h='';org.forEach(p=>{h+=this.rPC(p,false)});
+if(sp.length){h+=`<div class="dv"></div><p class="cap" style="margin-bottom:.5rem">📢 Sponsored Listings — Paid for enhanced visibility. Does not affect clinical recommendations.</p>`;sp.forEach(p=>{h+=this.rPC(p,true)})}
+h+=`<div class="cd" style="border-left:3px solid var(--inf)"><div style="display:flex;align-items:center;gap:.75rem"><span style="font-size:1.5rem">📱</span><div><p class="hmd" style="margin-bottom:.15rem">Tele-Ortho Available</p><p class="bds">Virtual MSK consultations available in ${this.s.loc?.stateName||'your state'}. Wait: 1-2 days.</p></div></div></div>`;
+return h},
+
+rPC(p,sp){return`<div class="pc ${sp?'pc-sp':''}">${sp?'<div class="spl">SPONSORED</div>':''}<div class="pc-h"><div><div class="pc-n">${p.name}</div><div class="pc-cr">${p.creds} · ${p.typeLabel} · ${p.sub}</div></div><div class="mb mb-${p.badge.charAt(0)}">${p.matchScore}% match</div></div><div class="pm"><span class="pm-i">📍 ${p.dist} mi · ${p.city}, ${p.state}</span><span class="pm-i">⭐ ${p.rating} (${p.reviews})</span><span class="pm-i">📅 ${p.nextAvail}</span><span class="pm-i">${p.facility}</span>${p.acceptNew?'<span class="tag tag-g">Accepting New</span>':'<span class="tag tag-x">Waitlist</span>'}${p.virtual?'<span class="tag tag-b">Virtual</span>':''}</div><div class="pr"><p class="cap" style="font-weight:600;margin-bottom:.4rem">Why this match:</p>${p.reasons.map(r=>`<p class="rsn">${r}</p>`).join('')}</div><details style="margin-top:.75rem"><summary class="cap" style="cursor:pointer;color:var(--pr)">View Score Breakdown</summary><div style="margin-top:.5rem">${Object.entries(p.scores).map(([k,v])=>`<div class="sb"><span class="sb-l">${k.charAt(0).toUpperCase()+k.slice(1)}</span><div class="sb-t"><div class="sb-f" style="width:${v}%"></div></div><span class="sb-v">${Math.round(v)}</span></div>`).join('')}</div></details><div style="margin-top:.75rem;display:flex;flex-wrap:wrap;gap:.3rem">${p.insurance.map(i=>`<span class="tag tag-x">${i}</span>`).join('')}</div></div>`},
+
+rEdu(e){return`<div class="cd"><h3 class="hlg">${e.title}</h3><p class="bd">${e.overview}</p></div><div class="cd"><h4 class="hmd">Common Causes</h4><ul class="edu-l">${e.causes.map(c=>`<li>${c}</li>`).join('')}</ul></div><div class="cd"><h4 class="hmd">Recovery Timeline</h4><p class="cap" style="font-style:italic">Individual recovery varies. General estimates only.</p><div class="tl">${e.timeline.map(t=>`<div class="tl-i"><span class="tl-p">${t.p}</span><span class="tl-d">${t.d}</span></div>`).join('')}</div></div><div class="cd"><h4 class="hmd">Conservative Management</h4><ul class="edu-l">${e.conservative.map(c=>`<li>${c}</li>`).join('')}</ul></div><div class="cd"><h4 class="hmd">Risk Factors</h4><ul class="edu-l">${e.risks.map(r=>`<li>${r}</li>`).join('')}</ul></div><div class="cd"><h4 class="hmd">FAQ</h4>${e.faq.map(f=>`<div class="fq"><div class="fq-q">${f.q}<span class="fq-ar">▼</span></div><div class="fq-a">${f.a}</div></div>`).join('')}</div>`},
+
+rVisitPrep(){
+const t=this.s.triage,a=this.s.answers;
+const dm={lt2w:"< 2 weeks","2_6w":"2-6 weeks","6_12w":"6 wk – 3 mo","3_6m":"3-6 months",gt6m:"6+ months"};
+return`<div class="sbox"><h3 class="hlg" style="margin-bottom:1rem">📋 Visit Preparation Summary</h3><p class="cap" style="margin-bottom:1rem">Print or save this for your appointment.</p><div class="dv"></div><div class="si"><span class="si-i">🏥</span><strong>Region:</strong>&nbsp;${t.regionLabel}</div><div class="si"><span class="si-i">📍</span><strong>Location:</strong>&nbsp;${this.s.loc?.stateName} (${this.s.zip})</div><div class="si"><span class="si-i">⏱</span><strong>Duration:</strong>&nbsp;${dm[a.duration?.v]||'Not specified'}</div><div class="si"><span class="si-i">📊</span><strong>Pain:</strong>&nbsp;${a.severity||0}/10</div><div class="si"><span class="si-i">📈</span><strong>Impact:</strong>&nbsp;${t.funcCat} (${t.funcScore}/16)</div><div class="si"><span class="si-i">🔎</span><strong>Onset:</strong>&nbsp;${a.onset?.l||'Not specified'}</div>${a.h_pt?`<div class="si"><span class="si-i">🏃</span><strong>Prior PT:</strong>&nbsp;${a.h_pt.l||''}</div>`:''}<div class="dv"></div><h4 class="hmd">Recommended Providers:</h4>${t.providers.map((p,i)=>`<div class="si"><span class="si-i">${i+1}.</span><strong>${p.label}</strong>&nbsp;— ${p.reason}</div>`).join('')}<div class="dv"></div><h4 class="hmd">Bring to Your Visit:</h4><div class="si"><span class="si-i">✅</span>Photo ID and insurance card</div><div class="si"><span class="si-i">✅</span>List of current medications</div><div class="si"><span class="si-i">✅</span>Previous imaging CDs or reports</div><div class="si"><span class="si-i">✅</span>This visit preparation summary</div><div class="si"><span class="si-i">✅</span>List of questions for your provider</div></div>`}
+};
+
+App.render();
+</script>
+</body>
+</html>
